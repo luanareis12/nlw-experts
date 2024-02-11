@@ -1,131 +1,140 @@
-const perguntas = [
-  {
-    pergunta: "Qual é a sintaxe correta para declarar uma variável em JavaScript?",
-    respostas: [
-      "var myVar;",
-      "variable myVar;",
-      "v myVar;",
-    ],
-    correta: 0
-  },
-  {
-    pergunta: "Qual método é usado para imprimir algo no console em JavaScript?",
-    respostas: [
-      "print()",
-      "console.log()",
-      "echo()",
-    ],
-    correta: 1
-  },
-  {
-    pergunta: "Qual destes é um tipo de dado em JavaScript?",
-    respostas: [
-      "string",
-      "number",
-      "both",
-    ],
-    correta: 2
-  },
-  {
-    pergunta: "O que o operador '===' faz em JavaScript?",
-    respostas: [
-      "Verifica se dois valores são iguais, incluindo o tipo.",
-      "Verifica se dois valores são iguais, mas ignora o tipo.",
-      "Atribui um valor a uma variável.",
-    ],
-    correta: 0
-  },
-  {
-    pergunta: "Qual é o operador de incremento em JavaScript?",
-    respostas: [
-      "++",
-      "--",
-      "+=",
-    ],
-    correta: 0
-  },
-  {
-    pergunta: "Qual método é usado para converter uma string em um número em JavaScript?",
-    respostas: [
-      "toInt()",
-      "parseInteger()",
-      "parseInt()",
-    ],
-    correta: 2
-  },
-  {
-    pergunta: "Qual é a maneira correta de escrever um comentário de linha única em JavaScript?",
-    respostas: [
-      "// This is a comment",
-      "/* This is a comment */",
-      "<!-- This is a comment -->",
-    ],
-    correta: 0
-  },
-  {
-    pergunta: "Qual é o método usado para adicionar um elemento ao final de um array em JavaScript?",
-    respostas: [
-      "append()",
-      "push()",
-      "addToEnd()",
-    ],
-    correta: 1
-  },
-  {
-    pergunta: "Qual é o resultado da expressão '10' + 2 em JavaScript?",
-    respostas: [
-      "12",
-      "102",
-      "Erro",
-    ],
-    correta: 1
-  },
-  {
-    pergunta: "Qual é a função do operador 'typeof' em JavaScript?",
-    respostas: [
-      "Ele retorna o tipo de uma variável.",
-      "Ele compara dois valores.",
-      "Ele verifica se um valor é nulo.",
-    ],
-    correta: 0
-  },
-];
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-const quiz = document.querySelector('#quiz')//o '#! procura pela tag 'id' dentro do html
-const template = document.querySelector('template')
+*, :root {
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box;
+  
+  font-size: 18;
+  text-align: justify;
+  font-family: 'Inter',sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
 
-const corretas = new Set()
-const totalDePerguntas = perguntas.length
-const mostrarTotal = document.querySelector('#acertos span')
-mostrarTotal.textContent = corretas.size + ' de ' + totalDePerguntas
+body {
+  background-color: #0F172A;
+}
 
-//loop ou laço de repetição
-for(const item of perguntas){
-  const quizItem = template.content.cloneNode(true)//CloneNode é uma função que vai clonar o nó(ou cada uma das tags criadas no arquivo do html)
-  quizItem.querySelector('h3').textContent = item.pergunta//Modifica o h3
+main{
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto 60px;
+}
 
-  for(let resposta of item.respostas){
-    const dt = quizItem.querySelector('dl dt').cloneNode(true)
-    dt.querySelector('span').textContent = resposta
-    dt.querySelector('input').setAttribute('name','pergunta-' + perguntas.indexOf(item))//A função indexOf pesquisa o índice 
-    dt.querySelector('input').value = item.respostas.indexOf(resposta)
-    dt.querySelector('input').onchange = (event) => {
-      const estaCorreta = event.target.value == item.correta
+header{
+  margin-top: 64px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #334155;
+}
 
-      corretas.delete(item)
-      if(estaCorreta){
-        corretas.add(item)
-      }
-      //alert(corretas.size)
-      mostrarTotal.textContent = corretas.size + ' de ' + totalDePerguntas
-    }
-    
-      
-    quizItem.querySelector('dl').appendChild(dt)    
-  }
+header h1{
+  margin-top: 24px;
+  font-size: 30px;
+  color: f1f5f9; /*Trabalha com a cor de texto*/
+}
 
-  quizItem.querySelector('dl dt').remove()
+#quiz {
+  counter-reset: quiz-item;
+}
 
-  //Coloca a pergunta na tela
-  quiz.appendChild(quizItem)
-}//as chaves também são chamadas de escopo
+.quiz-item {
+  margin-top: 24px;
+  border: 1px solid #475569;
+  border-radius: 6px;
+
+  overflow: hidden;
+}
+
+.quiz-item h3 {
+  padding: 16px 20px;
+  color: #e2e8f0;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background-color: #1e293B;
+}
+
+.quiz-item h3:before{
+  counter-increment: quiz-item;
+  content: counter(quiz-item);
+
+  background-color: #475569;
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+} 
+
+.quiz-item dl {
+  padding: 20px 24px;
+
+  display: grid;
+  gap: 8px;
+}
+
+.quiz-item dl dt {
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0;
+
+  display: flex; /* trabalha os itens e coloca um do lado do outro */
+  align-items: center;
+  gap: 8px; /*coloca um espaço entre o radius e a frase(opção de resposta)*/
+
+  color: #e2e8f0;
+
+}
+
+input {
+  /*O "all" são todas as propriedades que existem no "input*/
+  all: unset;
+  border: 1px solid #94a3b8;
+  width: 16px;
+  height: 16px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* display: inline-block; */
+}
+
+input:checked {
+  border: 1px solid #A3E635;
+}
+
+/*Pseudo-selector*/
+input:checked:before{
+  content: "";
+  width: 10px;
+  height: 10px;
+
+  background-color: #A3E635;
+  border-radius: 50px;
+} 
+
+/*Declaração */
+#acertos{
+  text-align: center;
+  background-color: #A3E635;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  padding: 12px;
+}
