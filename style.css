@@ -34,7 +34,7 @@ header{
 header h1{
   margin-top: 24px;
   font-size: 30px;
-  color: f1f5f9; /*Trabalha com a cor de texto*/
+  color: #f1f5f9;; /*Trabalha com a cor de texto*/
 }
 
 #quiz {
